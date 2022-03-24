@@ -2,11 +2,12 @@
   <v-form>
     <v-container>
       <v-text-field
-        v-model="message4"
         label="Write your name here, please"
         outlined
         clearable
+        @change="getName($event)"
       ></v-text-field>
+      
     </v-container>
   </v-form>
 </template>
@@ -18,38 +19,38 @@ export default {
   name: "Home",
 
   data: () => ({
-    name: '',
-    age: null,
-    gender: null,
-    nationality: null
+    age: {},
+    gender: {},
+    nationality: {}
   }),
 
   methods: {
-    async agify (){
+    getName(name){
+      this.agify(name);
+      this.genderize(name);
+      this.nationalize(name);
+    },
+    async agify (name){
        axios
-      .get('https://api.agify.io/?name=Ivan')
-      .then(response => (this.age = response))
+      .get('https://api.agify.io/?name=' + name)
+      .then((response) => response.json())
+      .then(data => (this.age = data))
       console.log(this.age)
     },
-    async genderize (){
+    async genderize (name){
        axios
-      .get('https://api.agify.io/?name=Ivan')
-      .then(response => (this.gender = response))
+      .get('https://api.agify.io/?name=' + name)
+      .then((response) => response.json())
+      .then(data => (this.gender = data))
       console.log(this.gender)
     },
-    async nationalize (){
+    async nationalize (name){
        axios
-      .get('https://api.agify.io/?name=Ivan')
-      .then(response => (this.nationality = response))
+      .get('https://api.agify.io/?name=' + name)
+      .then((response) => response.json())
+      .then(data => (this.nationality = data))
       console.log(this.nationality)
     }
   },
-
-  created() {
-    this.agify();
-    this.genderize();
-    this.nationalize();
-  }
-
 };
 </script>
