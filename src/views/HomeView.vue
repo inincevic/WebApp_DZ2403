@@ -7,13 +7,12 @@
         clearable
         @change="getName($event)"
       ></v-text-field>
-      
     </v-container>
   </v-form>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "Home",
@@ -21,36 +20,31 @@ export default {
   data: () => ({
     age: {},
     gender: {},
-    nationality: {}
+    nationality: {},
   }),
 
   methods: {
-    getName(name){
+    getName(name) {
       this.agify(name);
       this.genderize(name);
       this.nationalize(name);
     },
-    async agify (name){
-       axios
-      .get('https://api.agify.io/?name=' + name)
-      .then((response) => response.json())
-      .then(data => (this.age = data))
-      console.log(this.age)
+
+    async agify(name) {
+      let tempAge = await fetch("https://api.agify.io/?name=" + name);
+      this.age = await tempAge.json();
+      console.log(this.age.age)
     },
-    async genderize (name){
-       axios
-      .get('https://api.agify.io/?name=' + name)
-      .then((response) => response.json())
-      .then(data => (this.gender = data))
-      console.log(this.gender)
+    async genderize(name) {
+      let tempGender = await fetch("https://api.agify.io/?name=" + name);
+      this.gender = await tempGender.json();
+      console.log(this.gender.gender)
     },
-    async nationalize (name){
-       axios
-      .get('https://api.agify.io/?name=' + name)
-      .then((response) => response.json())
-      .then(data => (this.nationality = data))
-      console.log(this.nationality)
-    }
+    async nationalize(name) {
+      let tempNationality = await fetch("https://api.agify.io/?name=" + name);
+      this.nationality = await tempNationality.json();
+      console.log(this.nationality.nationality)
+    },
   },
 };
 </script>
